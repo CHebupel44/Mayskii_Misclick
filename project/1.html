@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Главная</title>
+    <link rel="stylesheet" href="2.css">
+    <script src="3.js" defer></script>
+</head>
+<body class="layout">
+    <aside class="sidebar">
+        <img class="avatar"
+             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&fit=crop&crop=faces"
+             alt="Аватар Александра">
+
+        <h2>Александр</h2>
+        <a href="user1.html">Перейти в профиль</a>
+
+        <nav>
+            <a href="work1.html">Работа 1</a>
+            <a href="work2.html">Работа 2</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <section class="hero">
+            <h1>Оцените лучшие работы месяца</h1>
+
+            <div class="slider">
+                <div class="slides" id="slides">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200" alt="Работа 1">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200" alt="Работа 2">
+                    <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1200" alt="Работа 3">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200" alt="Работа 4">
+                </div>
+
+                <button class="arrow prev" onclick="changeSlide(-1)" aria-label="Предыдущий слайд">❮</button>
+                <button class="arrow next" onclick="changeSlide(1)" aria-label="Следующий слайд">❯</button>
+            </div>
+
+            <div class="dots">
+                <button class="active" onclick="showSlide(0)" aria-label="Слайд 1"></button>
+                <button onclick="showSlide(1)" aria-label="Слайд 2"></button>
+                <button onclick="showSlide(2)" aria-label="Слайд 3"></button>
+                <button onclick="showSlide(3)" aria-label="Слайд 4"></button>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Самые популярные работы</h2>
+
+            <div class="works">
+                <article class="work">
+                    <a href="work1.html">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600" alt="Работа 1">
+                        <h3>Работа 1</h3>
+                    </a>
+                    <a href="user1.html">Александр (я)</a>
+                    <p>Просмотры: 120 · Лайки: 40</p>
+                </article>
+
+                <article class="work">
+                    <a href="work2.html">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600" alt="Работа 2">
+                        <h3>Работа 2</h3>
+                    </a>
+                    <a href="user1.html">Александр (я)</a>
+                    <p>Просмотры: 90 · Лайки: 35</p>
+                </article>
+
+                <article class="work">
+                    <a href="work3.html">
+                        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600" alt="Работа 3">
+                        <h3>Работа 3</h3>
+                    </a>
+                    <a href="user2.html">Евпатий</a>
+                    <p>Просмотры: 150 · Лайки: 20</p>
+                </article>
+
+                <article class="work">
+                    <a href="work4.html">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600" alt="Работа 4">
+                        <h3>Работа 4</h3>
+                    </a>
+                    <a href="user3.html">Савелий</a>
+                    <p>Просмотры: 80 · Лайки: 15</p>
+                </article>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Задания от работодателей</h2>
+
+            <div class="tasks">
+                <a class="task" href="task.html?id=1">
+                    <span class="tag">HTML / CSS</span>
+                    <h3>Сайт для кофейни</h3>
+                    <p>Создать страницу с меню, информацией о кофейне и контактами.</p>
+                    <p class="employer">Работодатель: Евкакий</p>
+                </a>
+
+                <a class="task" href="task.html?id=2">
+                    <span class="tag">HTML / CSS / JS</span>
+                    <h3>Каталог товаров</h3>
+                    <p>Сделать карточки товаров и поиск по названию.</p>
+                    <p class="employer">Работодатель: Максим Шабанов</p>
+                </a>
+
+                <a class="task" href="task.html?id=3">
+                    <span class="tag">Вёрстка</span>
+                    <h3>Портфолио фотографа</h3>
+                    <p>Сверстать страницу с галереей, описанием услуг и контактами.</p>
+                    <p class="employer">Работодатель: Олег</p>
+                </a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

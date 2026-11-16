@@ -1,0 +1,489 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: linear-gradient(160deg, #0d0e2d 30%, #27368f);
+}
+
+a {
+    color: #41c5ff;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #41c5ff;
+    outline-offset: 4px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+h1 {
+    font-size: clamp(26px, 3vw, 40px);
+}
+
+p, li {
+    line-height: 1.6;
+}
+
+img {
+    object-fit: cover;
+}
+
+/* главная и боковая панель */
+.layout {
+    padding: 0;
+}
+
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 230px;
+    padding: 35px 20px;
+    overflow-y: auto;
+    background: #042650;
+    text-align: center;
+}
+
+.avatar {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+}
+
+.sidebar nav {
+    display: grid;
+    gap: 12px;
+    margin-top: 45px;
+    text-align: left;
+}
+
+.sidebar nav a {
+    padding: 12px 0;
+    color: white;
+    font-size: 19px;
+}
+
+.sidebar .current {
+    border-bottom: 2px solid #00baff;
+}
+
+.content {
+    margin-left: 230px;
+    padding: 45px;
+}
+
+.content section {
+    margin-bottom: 65px;
+}
+
+.task-without-sidebar .content {
+    margin: 0;
+    padding: 0;
+}
+
+/* аватар справа в углу */
+.account {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+}
+
+.account img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+/* слайдер */
+.hero {
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+}
+
+.slider {
+    position: relative;
+    margin-top: 25px;
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    transition: transform .5s;
+}
+
+.slides img {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    height: 340px;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 15px;
+    border: 0;
+    background: #0009;
+    color: white;
+    font-size: 24px;
+}
+
+.prev { left: 0; }
+.next { right: 0; }
+
+.dots,
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dots {
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.dots button {
+    width: 32px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: #ffffff60;
+}
+
+.dots .active {
+    background: #41c5ff;
+}
+
+/* карточки */
+.section-title {
+    font-size: 28px;
+}
+
+.works,
+.tasks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+    gap: 25px;
+}
+
+.work,
+.task {
+    display: block;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #ffffff20;
+    background: #ffffff08;
+    color: white;
+}
+
+.work img,
+.empty-work-image {
+    display: block;
+    width: 100%;
+    height: 210px;
+}
+
+.empty-work-image {
+    background: #999;
+}
+
+.work h3,
+.task h3 {
+    color: white;
+    font-size: 21px;
+}
+
+.work p,
+.employer {
+    color: #c0c8e5;
+    font-size: 14px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #00baff20;
+    color: #65d3ff;
+    font-size: 13px;
+}
+
+/* страницы работ и заданий */
+.work-page,
+.task-page {
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+.work-image {
+    display: block;
+    width: 100%;
+    max-height: 450px;
+    margin: 25px 0;
+}
+
+.primary-button,
+.modal-buttons button {
+    padding: 12px 20px;
+    border: 0;
+    background: #19b8f5;
+    color: #07152d;
+}
+
+.primary-button {
+    margin-top: 15px;
+}
+
+.work-title,
+.ready-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.like,
+.rating button {
+    padding: 5px;
+    border: 0;
+    background: none;
+    color: #aaa;
+    font-size: 36px;
+}
+
+.like.liked {
+    color: #ff405f;
+}
+
+.rating .active {
+    color: #ffc647;
+}
+
+/* профили */
+body.profile-design {
+    padding: 60px 30px;
+    background: linear-gradient(160deg, #2b389d, #0d0e2d);
+}
+
+.profile-container {
+    max-width: 1250px;
+    margin: auto;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 45px;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: bold;
+}
+
+.profile-header {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+}
+
+.profile-photo {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-likes {
+    margin-top: 25px;
+    font-size: 21px;
+    text-align: center;
+}
+
+.profile-details h1 {
+    margin-top: 0;
+}
+
+.profile-description {
+    max-width: 800px;
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.profile-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 35px;
+    margin-top: 60px;
+    padding-top: 25px;
+    border-top: 3px solid #00baff;
+}
+
+.profile-tabs button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #a7acc8;
+    font-size: clamp(18px, 2vw, 27px);
+}
+
+.profile-tabs .active {
+    color: white;
+    font-weight: bold;
+}
+
+.profile-group {
+    margin-top: 35px;
+}
+
+.add-work,
+.archive-work {
+    border: 1px solid #ffffff50;
+    background: none;
+    color: white;
+}
+
+.add-work {
+    padding: 0 10px;
+    font-size: 30px;
+}
+
+.archive-work {
+    margin-top: 12px;
+    padding: 8px 12px;
+}
+
+/* стили модалки подтверждения и уведомления */
+.unsubscribe-modal {
+    width: min(420px, calc(100% - 40px));
+    padding: 25px;
+    border: 1px solid #ffffff30;
+    background: #151c46;
+    color: white;
+}
+
+.unsubscribe-modal::backdrop {
+    background: #000a;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.modal-buttons button:last-child {
+    background: #dce2ed;
+}
+
+.notice {
+    position: fixed;
+    top: 85px;
+    right: 20px;
+    max-width: calc(100% - 40px);
+    padding: 16px 22px;
+    background: #238447;
+    color: white;
+    z-index: 100;
+}
+
+/* телефоны */
+@media (max-width: 700px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+    }
+
+    .sidebar nav {
+        margin-top: 20px;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    body.profile-design {
+        padding: 80px 20px 30px;
+    }
+
+    .profile-header {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .profile-left {
+        max-width: 230px;
+    }
+
+    .slides img {
+        height: 220px;
+    }
+}
+
+.other-profile .profile-tabs button[data-filter="archive"],
+.other-profile .profile-group[data-status="archive"],
+.other-profile .archive-work,
+.other-profile .add-work {
+    display: none !important;
+}
+
+/* стиль для лайков */
+
+.like {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px;
+    border: none;
+    background: none;
+    color: #ccc;
+    font-size: 30px;
+}
+
+.like.liked {
+    color: #ff405f;
+}
+
+.like-count {
+    font-size: 20px;
+}
+
+.case-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 50px;
+    padding-top: 25px;
+    border-top: 3px solid #00baff;
+}
+
+.case-tabs button {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #a7acc8;
+    font-size: 24px;
+}
+
+.case-tabs button.active {
+    color: white;
+    font-weight: bold;
+}
+
+.case-section {
+    margin-top: 30px;
+}

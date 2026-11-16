@@ -1,20 +1,27 @@
 /* функции поиска элементов */
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
+const page = location.pathname.split("/").pop();
+const isMyProfile = page === "user1.html";
+const pageId = Number(new URLSearchParams(location.search).get("id"));
+
+if (page === "user2.html" || page === "user3.html") {
+    document.body.classList.add("other-profile");
+}
 
 /* слайдер */
 let slideIndex = 0;
 
 function showSlide(number) {
     const slides = $("#slides");
-    if (!slides || !slides.children.length) return;
+    if (!slides?.children.length) return;
 
     const count = slides.children.length;
     slideIndex = (number % count + count) % count;
     slides.style.transform = `translateX(-${slideIndex * 100}%)`;
 
-    $$(".dots button").forEach((button, i) => {
-        button.classList.toggle("active", i === slideIndex);
+    $$(".dots button").forEach((tab, i) => {
+        tab.classList.toggle("active", i === slideIndex);
     });
 }
 
@@ -38,7 +45,6 @@ function toggleLike(button) {
     const count = button.querySelector(".like-count");
 
     count.textContent = Number(count.textContent) + (liked ? 1 : -1);
-
     button.querySelector(".heart").textContent = liked ? "♥" : "♡";
     button.setAttribute("aria-pressed", liked);
 }
@@ -74,10 +80,8 @@ const tasks = [
 /* функция сохранения когда нажимаешь на кнопку участвовать чтобы отображалось норм в профиел */
 const storageKey = "web-project-tasks";
 
-const navigation = performance.getEntriesByType("navigation")[0];
-
 try {
-    if (navigation?.type === "reload") {
+    if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
         sessionStorage.removeItem(storageKey);
     }
 } catch (error) {}
@@ -85,7 +89,6 @@ try {
 function readTasks() {
     try {
         const saved = JSON.parse(sessionStorage.getItem(storageKey));
-
         return {
             joined: Array.isArray(saved?.joined) ? saved.joined : [],
             archived: Array.isArray(saved?.archived) ? saved.archived : []
@@ -124,7 +127,6 @@ function showNotice(text) {
     notice.textContent = text;
     notice.hidden = false;
     clearTimeout(noticeTimer);
-
     noticeTimer = setTimeout(() => notice.hidden = true, 3500);
 }
 
@@ -140,13 +142,12 @@ function button(text, action, className = "archive-work") {
 
 /* участие восстановление и удаление задания */
 function changeTask(id, action) {
-    const previous = {
-        joined: [...taskState.joined],
-        archived: [...taskState.archived]
-    };
+    const previous = taskState;
 
-    taskState.joined = taskState.joined.filter(item => item !== id);
-    taskState.archived = taskState.archived.filter(item => item !== id);
+    taskState = {
+        joined: previous.joined.filter(item => item !== id),
+        archived: previous.archived.filter(item => item !== id)
+    };
 
     if (action === "join") taskState.joined.push(id);
     if (action === "archive") taskState.archived.push(id);
@@ -167,7 +168,6 @@ modal.innerHTML = `
     <p>Точно ли вы хотите отписаться от данной работы?</p>
     <div class="modal-buttons"></div>
 `;
-
 document.body.appendChild(modal);
 
 let unsubscribeId = null;
@@ -192,26 +192,24 @@ function askUnsubscribe(id) {
 }
 
 /* заполнение страницы задания */
-const currentTask = tasks.find(task => {
-    return task.id === Number(new URLSearchParams(location.search).get("id"));
-});
+const currentTask = tasks.find(task => task.id === pageId);
 
 if ($("#task-page")) {
     if (!currentTask) {
         $("#task-page").textContent = "Задание не найдено.";
     } else {
         document.title = currentTask.title;
-        const employerLine = $("#task-employer");
-        const employerLink = document.createElement("a");
 
-        employerLink.href = "employer.html?id=" + currentTask.id;
-        employerLink.textContent = currentTask.employer;
+        ["title", "description", "requirements"].forEach(key => {
+            $("#task-" + key).textContent = currentTask[key];
+        });
 
-        employerLine.replaceChildren("Работодатель: ", employerLink);
-            "Работодатель: " + currentTask.employer;
         $("#task-image").src = currentTask.image;
-        $("#task-description").textContent = currentTask.description;
-        $("#task-requirements").textContent = currentTask.requirements;
+
+        const link = document.createElement("a");
+        link.href = "employer.html?id=" + currentTask.id;
+        link.textContent = currentTask.employer;
+        $("#task-employer").replaceChildren("Работодатель: ", link);
 
         $("#join-button").onclick = () => {
             if (taskState.joined.includes(currentTask.id)) {
@@ -261,10 +259,9 @@ function taskCard(task, archived) {
 /* готовые работы перемещаем сами карточки без копирования */
 const readyWorks = $('.profile-group[data-status="done"] .works');
 const archiveSection = $('.profile-group[data-status="archive"]');
-
 let completedArchive = $("#completed-archive");
 
-if (archiveSection && !completedArchive) {
+if (isMyProfile && archiveSection && !completedArchive) {
     completedArchive = document.createElement("div");
     completedArchive.id = "completed-archive";
     completedArchive.className = "works";
@@ -272,38 +269,30 @@ if (archiveSection && !completedArchive) {
 }
 
 function setupWork(card) {
+    if (!isMyProfile) return;
+
     const actions = document.createElement("div");
     actions.className = "actions";
 
-    const archiveButton = button("В архив", () => {
-        if (!completedArchive) return;
-
-        completedArchive.appendChild(card);
-        archiveButton.hidden = true;
-        restoreButton.hidden = false;
-        deleteButton.hidden = false;
+    function moveWork(archived) {
+        (archived ? completedArchive : readyWorks).appendChild(card);
+        archiveButton.hidden = archived;
+        restoreButton.hidden = deleteButton.hidden = !archived;
         render();
-        showNotice("Работа добавлена в архив");
-    });
+        showNotice(archived
+            ? "Работа добавлена в архив"
+            : "Работа возвращена в готовые");
+    }
 
-    const restoreButton = button("Восстановить", () => {
-        readyWorks.appendChild(card);
-        archiveButton.hidden = false;
-        restoreButton.hidden = true;
-        deleteButton.hidden = true;
-        render();
-        showNotice("Работа возвращена в готовые");
-    });
-
+    const archiveButton = button("В архив", () => moveWork(true));
+    const restoreButton = button("Восстановить", () => moveWork(false));
     const deleteButton = button("Удалить", () => {
         card.remove();
         render();
         showNotice("Работа удалена");
     });
 
-    restoreButton.hidden = true;
-    deleteButton.hidden = true;
-
+    restoreButton.hidden = deleteButton.hidden = true;
     actions.append(archiveButton, restoreButton, deleteButton);
     card.appendChild(actions);
 }
@@ -311,7 +300,7 @@ function setupWork(card) {
 readyWorks?.querySelectorAll(".work").forEach(setupWork);
 
 /* добавление пустой работы */
-if ($("#add-work") && readyWorks) {
+if (isMyProfile && $("#add-work") && readyWorks) {
     $("#add-work").onclick = () => {
         const card = document.createElement("article");
         card.className = "work";
@@ -320,7 +309,6 @@ if ($("#add-work") && readyWorks) {
                  aria-label="Серая картинка"></div>
             <h3>Пустая работа</h3>
         `;
-
         readyWorks.appendChild(card);
         setupWork(card);
         selectedFilter = "done";
@@ -330,6 +318,14 @@ if ($("#add-work") && readyWorks) {
 
 /* вкладки */
 let selectedFilter = "all";
+
+function selectTabs(selector, value, attribute) {
+    $$(selector + " button").forEach(tab => {
+        const active = tab.getAttribute(attribute) === value;
+        tab.classList.toggle("active", active);
+        tab.setAttribute("aria-pressed", active);
+    });
+}
 
 $$(".profile-tabs button").forEach(tab => {
     tab.onclick = () => {
@@ -344,19 +340,15 @@ function updateTabs() {
     $$(".profile-group").forEach(group => {
         const status = group.dataset.status;
         counts[status] = group.querySelectorAll(".work, .task").length;
-
         group.hidden = selectedFilter === "all"
             ? status === "archive"
             : status !== selectedFilter;
     });
 
     counts.all = counts.done + counts.progress;
+    selectTabs(".profile-tabs", selectedFilter, "data-filter");
 
     $$(".profile-tabs button").forEach(tab => {
-        const active = tab.dataset.filter === selectedFilter;
-        tab.classList.toggle("active", active);
-        tab.setAttribute("aria-pressed", active);
-
         const counter = tab.querySelector("span");
         if (counter) counter.textContent = counts[tab.dataset.filter];
     });
@@ -371,27 +363,28 @@ function render() {
             joined ? "Вы участвуете в выполнении задания." : "";
     }
 
-    [
-        ["in-progress", taskState.joined, false],
-        ["archived-tasks", taskState.archived, true]
-    ].forEach(([id, list, archived]) => {
-        const container = document.getElementById(id);
-        if (!container) return;
+    if (isMyProfile) {
+        [
+            ["in-progress", taskState.joined, false],
+            ["archived-tasks", taskState.archived, true]
+        ].forEach(([id, list, archived]) => {
+            const container = document.getElementById(id);
+            if (!container) return;
 
-        container.replaceChildren();
-
-        tasks.filter(task => list.includes(task.id)).forEach(task => {
-            container.appendChild(taskCard(task, archived));
+            container.replaceChildren(
+                ...tasks.filter(task => list.includes(task.id))
+                    .map(task => taskCard(task, archived))
+            );
         });
-    });
 
-    if ($("#empty-progress")) {
-        $("#empty-progress").hidden = !!$("#in-progress")?.children.length;
-    }
+        if ($("#empty-progress")) {
+            $("#empty-progress").hidden = !!$("#in-progress")?.children.length;
+        }
 
-    if ($("#empty-archive")) {
-        $("#empty-archive").hidden =
-            !!archiveSection?.querySelector(".work, .task");
+        if ($("#empty-archive")) {
+            $("#empty-archive").hidden =
+                !!archiveSection?.querySelector(".work, .task");
+        }
     }
 
     updateTabs();
@@ -405,20 +398,6 @@ window.addEventListener("pageshow", () => {
     render();
 });
 
-function hideOtherProfileControls() {
-    const file = location.pathname.split("/").pop();
-
-    if (file !== "user2.html" && file !== "user3.html") return;
-
-    document.body.classList.add("other-profile");
-
-    document.querySelectorAll(
-        '.profile-group[data-status="done"] .archive-work'
-    ).forEach(button => button.remove());
-}
-
-hideOtherProfileControls();
-
 const employers = [
     {
         id: 1,
@@ -426,7 +405,7 @@ const employers = [
         organization: "Кофейня «Зёрна»",
         phone: "+7 (000) 000-00-01",
         email: "akakiy@example.com",
-        avatar: "file:///C:/Users/ArtVeles/Desktop/project/images/evkakiy.jpg",
+        avatar: "images/evkakiy.jpg",
         description: "Небольшая кофейня. Ищем разработчиков для создания удобного сайта с меню, контактами и информацией о нашей организации."
     },
     {
@@ -435,7 +414,7 @@ const employers = [
         organization: "Магазин «Городская одежда»",
         phone: "+7 (000) 000-00-02",
         email: "stint@example.com",
-        avatar: "file:///C:/Users/ArtVeles/Desktop/project/images/stint.webp",
+        avatar: "images/stint.webp",
         description: "Магазин повседневной одежды. Хотим развивать онлайн-каталог и сотрудничать с начинающими веб-разработчиками."
     },
     {
@@ -444,87 +423,70 @@ const employers = [
         organization: "Фотостудия «Кадр»",
         phone: "+7 (000) 000-00-03",
         email: "oleg@example.com",
-        avatar: "file:///C:/Users/ArtVeles/Desktop/project/images/oleg.webp",
+        avatar: "images/oleg.webp",
         description: "Занимаемся портретной и предметной фотографией. Нужен сайт, на котором можно посмотреть наши работы, услуги и контакты."
     }
 ];
 
 if ($("#employer-profile")) {
-    const id = Number(new URLSearchParams(location.search).get("id"));
-    const employer = employers.find(item => item.id === id);
+    const employer = employers.find(item => item.id === pageId);
 
     if (!employer) {
         $("#employer-profile").textContent = "Работодатель не найден.";
     } else {
         document.title = employer.organization;
 
-        $("#employer-name").textContent = employer.name;
-        $("#employer-organization").textContent = employer.organization;
+        ["name", "organization", "description", "phone", "email"].forEach(key => {
+            $("#employer-" + key).textContent = employer[key];
+        });
+
         $("#employer-avatar").src = employer.avatar;
-        $("#employer-description").textContent = employer.description;
+        $("#employer-phone").href =
+            "tel:" + employer.phone.replace(/[^\d+]/g, "");
+        $("#employer-email").href = "mailto:" + employer.email;
 
-        const phone = $("#employer-phone");
-        phone.textContent = employer.phone;
-        phone.href = "tel:" + employer.phone.replace(/[^\d+]/g, "");
+        const activeTasks = tasks.filter(task => task.id === employer.id);
 
-        const email = $("#employer-email");
-        email.textContent = employer.email;
-        email.href = "mailto:" + employer.email;
+        $("#active-cases").replaceChildren(...activeTasks.map(task => {
+            const card = document.createElement("a");
+            card.className = "task";
+            card.href = "task.html?id=" + task.id;
+            card.innerHTML = `
+                <h3>${task.title}</h3>
+                <p>${task.description}</p>
+                <p class="employer">Работодатель: ${task.employer}</p>
+            `;
+            return card;
+        }));
+
+        $("#active-case-count").textContent = activeTasks.length;
+        $("#empty-active-cases").hidden = activeTasks.length > 0;
+
+        function showCases(value) {
+            selectTabs(".case-tabs", value, "data-case");
+            $$("[data-case-section]").forEach(section => {
+                section.hidden = section.dataset.caseSection !== value;
+            });
+        }
+
+        $$(".case-tabs button").forEach(tab => {
+            tab.onclick = () => showCases(tab.dataset.case);
+        });
+
+        showCases("active");
     }
 }
 
-if ($("#active-cases")) {
-    const employerId = Number(
-        new URLSearchParams(location.search).get("id")
-    );
+if ($("#login-form")) {
+    $("#login-form").onsubmit = event => {
+        event.preventDefault();
+        location.href = "1.html";
+    };
 
-    const employer = employers.find(item => item.id === employerId);
-
-    const activeTasks = employer
-        ? tasks.filter(task => task.employer === employer.name)
-        : [];
-
-    activeTasks.forEach(task => {
-        const card = document.createElement("a");
-        card.className = "task";
-        card.href = "task.html?id=" + task.id;
-
-        const title = document.createElement("h3");
-        title.textContent = task.title;
-
-        const description = document.createElement("p");
-        description.textContent = task.description;
-
-        const name = document.createElement("p");
-        name.className = "employer";
-        name.textContent = "Работодатель: " + task.employer;
-
-        card.append(title, description, name);
-        $("#active-cases").appendChild(card);
-    });
-
-    $("#active-case-count").textContent = activeTasks.length;
-    $("#empty-active-cases").hidden = activeTasks.length > 0;
-
-    $$(".case-tabs button").forEach(button => {
-        button.setAttribute(
-            "aria-pressed",
-            button.classList.contains("active")
-        );
-
+    $$(".forgot, .login-methods button").forEach(button => {
         button.onclick = () => {
-            const selected = button.dataset.case;
-
-            $$(".case-tabs button").forEach(tab => {
-                const active = tab.dataset.case === selected;
-                tab.classList.toggle("active", active);
-                tab.setAttribute("aria-pressed", active);
-            });
-
-            $$("[data-case-section]").forEach(section => {
-                section.hidden =
-                    section.dataset.caseSection !== selected;
-            });
+            $("#login-message").textContent =
+                "Эта функция пока не подключена.";
         };
     });
 }

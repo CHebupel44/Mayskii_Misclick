@@ -35,7 +35,7 @@ h1 {
     font-size: clamp(26px, 3vw, 40px);
 }
 
-p, li {
+p {
     line-height: 1.6;
 }
 
@@ -51,6 +51,9 @@ img {
 .sidebar {
     position: fixed;
     inset: 0 auto 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 230px;
     padding: 35px 20px;
     overflow-y: auto;
@@ -66,6 +69,7 @@ img {
 
 .sidebar nav {
     display: grid;
+    width: 100%;
     gap: 12px;
     margin-top: 45px;
     text-align: left;
@@ -77,8 +81,11 @@ img {
     font-size: 19px;
 }
 
-.sidebar .current {
-    border-bottom: 2px solid #00baff;
+.logout {
+    margin-top: auto;
+    padding-top: 40px;
+    color: red;
+    font-size: 20px;
 }
 
 .content {
@@ -260,17 +267,12 @@ img {
     gap: 15px;
 }
 
-.like,
 .rating button {
     padding: 5px;
     border: 0;
     background: none;
     color: #aaa;
     font-size: 36px;
-}
-
-.like.liked {
-    color: #ff405f;
 }
 
 .rating .active {
@@ -305,7 +307,6 @@ body.profile-design {
     width: 250px;
     height: 250px;
     border-radius: 50%;
-    object-fit: cover;
 }
 
 .profile-likes {
@@ -324,30 +325,52 @@ body.profile-design {
     font-size: 20px;
 }
 
-.profile-tabs {
+.profile-tabs,
+.case-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px 35px;
-    margin-top: 60px;
     padding-top: 25px;
     border-top: 3px solid #00baff;
 }
 
-.profile-tabs button {
+.profile-tabs {
+    gap: 20px 35px;
+    margin-top: 60px;
+}
+
+.case-tabs {
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.profile-tabs button,
+.case-tabs button {
     padding: 0;
     border: 0;
     background: none;
     color: #a7acc8;
+}
+
+.profile-tabs button {
     font-size: clamp(18px, 2vw, 27px);
 }
 
-.profile-tabs .active {
+.case-tabs button {
+    font-size: 24px;
+}
+
+.profile-tabs .active,
+.case-tabs .active {
     color: white;
     font-weight: bold;
 }
 
 .profile-group {
     margin-top: 35px;
+}
+
+.case-section {
+    margin-top: 30px;
 }
 
 .add-work,
@@ -365,6 +388,13 @@ body.profile-design {
 .archive-work {
     margin-top: 12px;
     padding: 8px 12px;
+}
+
+.other-profile .profile-tabs button[data-filter="archive"],
+.other-profile .profile-group[data-status="archive"],
+.other-profile .archive-work,
+.other-profile .add-work {
+    display: none !important;
 }
 
 /* стили модалки подтверждения и уведомления */
@@ -400,47 +430,6 @@ body.profile-design {
     z-index: 100;
 }
 
-/* телефоны */
-@media (max-width: 700px) {
-    .sidebar {
-        position: static;
-        width: 100%;
-    }
-
-    .sidebar nav {
-        margin-top: 20px;
-    }
-
-    .content {
-        margin-left: 0;
-        padding: 20px;
-    }
-
-    body.profile-design {
-        padding: 80px 20px 30px;
-    }
-
-    .profile-header {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .profile-left {
-        max-width: 230px;
-    }
-
-    .slides img {
-        height: 220px;
-    }
-}
-
-.other-profile .profile-tabs button[data-filter="archive"],
-.other-profile .profile-group[data-status="archive"],
-.other-profile .archive-work,
-.other-profile .add-work {
-    display: none !important;
-}
-
 /* стиль для лайков */
 
 .like {
@@ -448,7 +437,7 @@ body.profile-design {
     align-items: center;
     gap: 8px;
     padding: 5px;
-    border: none;
+    border: 0;
     background: none;
     color: #ccc;
     font-size: 30px;
@@ -462,28 +451,91 @@ body.profile-design {
     font-size: 20px;
 }
 
-.case-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    margin-top: 50px;
-    padding-top: 25px;
-    border-top: 3px solid #00baff;
+.login-page {
+    padding: 25px 20px;
 }
 
-.case-tabs button {
-    padding: 0;
-    border: none;
-    background: none;
-    color: #a7acc8;
-    font-size: 24px;
+.login {
+    max-width: 420px;
+    margin: auto;
 }
 
-.case-tabs button.active {
-    color: white;
+.login h1 {
+    margin: 0 0 25px;
+    text-align: center;
+    font-size: 38px;
+}
+
+.login label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 18px;
     font-weight: bold;
 }
 
-.case-section {
-    margin-top: 30px;
+.login input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 0;
+    background: #d9d9d9;
+    color: #111;
+    font: inherit;
+    font-size: 16px;
+}
+
+.login input[type="password"] {
+    margin-bottom: 10px;
+}
+
+.forgot {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #00a8e8;
+    font-size: 16px;
+}
+
+.other-login {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.other-login p {
+    margin: 0 0 12px;
+}
+
+.login-methods {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.login-methods button {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: #d9d9d9;
+    color: #111;
+    font-size: 18px;
+}
+
+#login-message {
+    min-height: 20px;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.login-submit {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: 0;
+    background: #00a8e8;
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
 }

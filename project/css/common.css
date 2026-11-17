@@ -1,0 +1,189 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: linear-gradient(160deg, #0d0e2d 30%, #27368f);
+}
+
+a {
+    color: #41c5ff;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #41c5ff;
+    outline-offset: 4px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+h1 {
+    font-size: clamp(26px, 3vw, 40px);
+}
+
+p {
+    line-height: 1.6;
+}
+
+img {
+    object-fit: cover;
+}
+
+/* аватар справа в углу */
+.account {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+}
+
+.account img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* карточки */
+.section-title {
+    font-size: 28px;
+}
+
+.works,
+.tasks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+    gap: 25px;
+}
+
+.work,
+.task {
+    display: block;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #ffffff20;
+    background: #ffffff08;
+    color: white;
+}
+
+.work img,
+.empty-work-image {
+    display: block;
+    width: 100%;
+    height: 210px;
+}
+
+.empty-work-image {
+    background: #999;
+}
+
+.work h3,
+.task h3 {
+    color: white;
+    font-size: 21px;
+}
+
+.work p,
+.employer {
+    color: #c0c8e5;
+    font-size: 14px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #00baff20;
+    color: #65d3ff;
+    font-size: 13px;
+}
+
+/* страницы работ и заданий */
+.work-page,
+.task-page {
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+.work-image {
+    display: block;
+    width: 100%;
+    max-height: 450px;
+    margin: 25px 0;
+}
+
+.primary-button,
+.modal-buttons button {
+    padding: 12px 20px;
+    border: 0;
+    background: #19b8f5;
+    color: #07152d;
+}
+
+.primary-button {
+    margin-top: 15px;
+}
+
+.add-work,
+.archive-work {
+    border: 1px solid #ffffff50;
+    background: none;
+    color: white;
+}
+
+.archive-work {
+    margin-top: 12px;
+    padding: 8px 12px;
+}
+
+/* стили модалки подтверждения и уведомления */
+.unsubscribe-modal {
+    width: min(420px, calc(100% - 40px));
+    padding: 25px;
+    border: 1px solid #ffffff30;
+    background: #151c46;
+    color: white;
+}
+
+.unsubscribe-modal::backdrop {
+    background: #000a;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.modal-buttons button:last-child {
+    background: #dce2ed;
+}
+
+.notice {
+    position: fixed;
+    top: 85px;
+    right: 20px;
+    max-width: calc(100% - 40px);
+    padding: 16px 22px;
+    background: #238447;
+    color: white;
+    z-index: 100;
+}

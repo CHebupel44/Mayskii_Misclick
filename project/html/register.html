@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="../javascript/auth.js" defer></script>
+    <script src="../javascript/register.js" defer></script>
+</head>
+<body class="login-page">
+    <a href="index.html">〈 Назад</a>
+
+    <main class="login">
+        <h1>Регистрация</h1>
+
+        <form id="register-form">
+            <label for="register-name">Имя</label>
+            <input id="register-name" autocomplete="nickname"
+                   maxlength="40" required>
+
+            <label for="register-password">Пароль</label>
+            <input id="register-password" type="password"
+                   autocomplete="new-password" minlength="6" required>
+
+            <label for="register-repeat">Повторный пароль</label>
+            <input id="register-repeat" type="password"
+                   autocomplete="new-password" minlength="6" required>
+
+            <label for="register-email">Почта</label>
+            <input id="register-email" type="email"
+                   autocomplete="email" required>
+
+            <div class="other-login">
+                <p>Войти другим способом:</p>
+
+                <div class="login-methods">
+                    <button type="button">ВК</button>
+                    <button type="button">G</button>
+                    <button type="button">Я</button>
+                    <button type="button">ТГ</button>
+                    <button type="button">@</button>
+                </div>
+            </div>
+
+            <p id="register-message" role="status"></p>
+
+            <button class="login-submit" type="submit">
+                Зарегистрироваться
+            </button>
+
+            <p class="auth-switch">
+                Уже есть аккаунт? <a href="login.html">Авторизация</a>
+            </p>
+        </form>
+    </main>
+</body>
+</html>

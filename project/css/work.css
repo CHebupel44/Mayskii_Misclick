@@ -1,0 +1,38 @@
+.work-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rating button {
+    padding: 5px;
+    border: 0;
+    background: none;
+    color: #aaa;
+    font-size: 36px;
+}
+
+.rating .active {
+    color: #ffc647;
+}
+
+/* стиль для лайков */
+
+.like {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px;
+    border: 0;
+    background: none;
+    color: #ccc;
+    font-size: 30px;
+}
+
+.like.liked {
+    color: #ff405f;
+}
+
+.like-count {
+    font-size: 20px;
+}

@@ -10,7 +10,7 @@
     <script src="../javascript/login.js" defer></script>
 </head>
 <body class="login-page">
-    <a class="auth-back" href="index.html">〈 Назад</a>
+    <a class="auth-back" href="index.html">← Назад</a>
 
     <main class="login">
         <h1 id="auth-title">Авторизация</h1>
@@ -37,9 +37,7 @@
                     <input id="password" type="password"
                            autocomplete="current-password" required>
 
-                    <button class="forgot" type="button">
-                        Забыли пароль?
-                    </button>
+                           <a class="forgot" href="recovery.html">Забыли пароль?</a>
                 </div>
 
                 <div id="phone-fields" hidden>
@@ -50,8 +48,7 @@
                            required disabled>
 
                     <p class="auth-hint">
-                        Демонстрационный вход: код 123456.
-                        SMS не отправляется.
+                        (код 123456)
                     </p>
                 </div>
 
@@ -82,7 +79,7 @@
 
         <form id="code-form" hidden>
             <p class="code-description">
-                Введите демонстрационный код из 6 цифр:
+                Введите код из 6 цифр:
                 <strong>123456</strong>
             </p>
 

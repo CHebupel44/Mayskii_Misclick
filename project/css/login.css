@@ -150,3 +150,23 @@
 #code-form {
     text-align: center;
 }
+
+.recovery h1 {
+    font-size: 34px;
+    margin-bottom: 35px;
+}
+
+.recovery .auth-tabs {
+    justify-content: center;
+    margin-bottom: 45px;
+}
+
+.recovery .login-submit {
+    margin-top: 35px;
+}
+
+#recovery-message {
+    min-height: 20px;
+    text-align: center;
+    font-size: 14px;
+}

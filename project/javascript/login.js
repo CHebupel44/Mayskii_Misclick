@@ -87,16 +87,16 @@ codeForm.onsubmit = event => {
         finishLogin();
     } else {
         document.getElementById("code-message").textContent =
-            "Неверный код. Для демонстрации введите 123456.";
+            "(код 123456)";
     }
 };
 
 document.getElementById("resend-code").onclick = () => {
     document.getElementById("code-message").textContent =
-        "SMS не отправляется. Демонстрационный код: 123456.";
+        "(код 123456)";
 };
 
-document.querySelectorAll(".forgot:not(#resend-code), .login-methods button")
+document.querySelectorAll(".login-methods button")
     .forEach(button => {
         button.onclick = () => {
             document.getElementById("login-message").textContent =

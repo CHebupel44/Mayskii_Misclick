@@ -26,6 +26,35 @@
     <a class="logout" id="sidebar-action" href="register.html">Выйти</a>
     </aside>
 
+    <header class="mobile-header">
+    <input id="work-search" type="search"
+           placeholder="⌕ Поиск..." aria-label="Поиск работ">
+
+    <button id="avatar-button" type="button"
+            aria-label="Открыть меню профиля"
+            aria-haspopup="dialog">
+        <img id="mobile-avatar" alt="Аватар профиля">
+    </button>
+</header>
+
+<dialog id="profile-menu">
+    <button class="menu-back" id="close-profile-menu" type="button">
+        Назад ›
+    </button>
+
+    <a id="mobile-profile" href="user1.html">Профиль</a>
+
+    <details>
+        <summary>Настройки</summary>
+        <label class="menu-setting">
+            <input id="large-text" type="checkbox">
+            Крупный текст
+        </label>
+    </details>
+
+    <a id="mobile-account-action" href="register.html">Выйти</a>
+</dialog>
+
     <main class="content">
         <section class="hero">
             <h1>Оцените лучшие работы месяца</h1>
@@ -53,7 +82,19 @@
         <section>
             <h2 class="section-title">Самые популярные работы</h2>
 
-            <div class="works">
+            <div class="mobile-filter">
+                <label for="work-filter">Фильтр ▽</label>
+                <select id="work-filter">
+                    <option value="all">Все работы</option>
+                    <option value="mine">Мои работы</option>
+                    <option value="others">Другие авторы</option>
+                    <option value="popular">По популярности</option>
+                </select>
+            </div>
+
+<p id="no-works" hidden>Работы не найдены.</p>
+
+<div class="works" id="main-works">
                 <article class="work">
                     <a href="work1.html">
                         <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600" alt="Работа 1">

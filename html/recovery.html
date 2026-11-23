@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Восстановление пароля</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="../javascript/recovery.js" defer></script>
+</head>
+<body class="login-page">
+    <a class="auth-back" href="login.html">← Назад</a>
+
+    <main class="login recovery">
+        <h1 id="recovery-title">Восстановление пароля</h1>
+
+        <section id="contact-step">
+            <nav class="auth-tabs" aria-label="Способ восстановления">
+                <span>По:</span>
+                <button type="button" class="active"
+                        data-method="email" aria-pressed="true">
+                    Почте
+                </button>
+                <button type="button"
+                        data-method="phone" aria-pressed="false">
+                    Телефону
+                </button>
+            </nav>
+
+            <form id="contact-form">
+                <label id="contact-label" for="contact">Почта:</label>
+                <input id="contact" type="email"
+                       autocomplete="email" required>
+
+                <p class="auth-hint">
+                    Код подтверждения 123456
+                </p>
+
+                <button class="login-submit" type="submit">Далее</button>
+            </form>
+
+            <p class="auth-switch">
+                Ещё не зарегистрированы?
+                <a href="register.html">Зарегистрироваться</a>
+            </p>
+        </section>
+
+        <section id="confirmation-step" hidden>
+            <p class="code-description">
+                код: <strong>123456</strong>
+            </p>
+
+            <form id="recovery-code-form">
+                <label for="recovery-code">Код из 6 цифр</label>
+                <input id="recovery-code" inputmode="numeric"
+                       pattern="[0-9]{6}" maxlength="6"
+                       autocomplete="one-time-code" required>
+
+                <p id="recovery-message" role="status"></p>
+
+                <button class="login-submit" type="submit">Далее</button>
+            </form>
+        </section>
+
+        <section id="password-step" hidden>
+            <form id="new-password-form">
+                <label for="new-password">Пароль</label>
+                <input id="new-password" type="password"
+                       minlength="6" autocomplete="new-password" required>
+
+                <label for="repeat-password">Повторный пароль</label>
+                <input id="repeat-password" type="password"
+                       minlength="6" autocomplete="new-password" required>
+
+                <button class="login-submit" type="submit">Заменить</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

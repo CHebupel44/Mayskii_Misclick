@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Профиль работодателя</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <script src="../javascript/common.js" defer></script>
+    <script src="../javascript/tasks.js" defer></script>
+    <script src="../javascript/employer.js" defer></script>
+</head>
+<body class="profile-design">
+    <main class="profile-container">
+        <a class="back-link" href="index.html">← На главную</a>
+
+        <div id="employer-profile">
+            <header class="profile-header">
+                <div class="profile-left">
+                    <img class="profile-photo" data-employer-avatar="1" src="../images/avatar-employer1.png" alt="Евкакий" hidden>
+<img class="profile-photo" data-employer-avatar="2" src="../images/avatar-employer2.png" alt="Максим Шабанов" hidden>
+<img class="profile-photo" data-employer-avatar="3" src="../images/avatar-employer3.png" alt="Олег" hidden>
+                </div>
+
+                <div class="profile-details">
+                    <h1 id="employer-name"></h1>
+
+                    <h2 id="employer-organization"></h2>
+
+                    <p>
+                        Телефон:
+                        <a id="employer-phone"></a>
+                    </p>
+
+                    <p>
+                        Почта:
+                        <a id="employer-email"></a>
+                    </p>
+
+                    <p class="profile-description"
+                       id="employer-description"></p>
+                </div>
+            </header>
+            <nav class="case-tabs" aria-label="Кейсы работодателя">
+    <button class="active" data-case="active">
+        Активные кейсы (<span id="active-case-count">0</span>)
+    </button>
+
+    <button data-case="closed">
+        Закрытые кейсы (<span id="closed-case-count">0</span>)
+    </button>
+</nav>
+
+<section class="case-section" data-case-section="active">
+    <div class="tasks" id="active-cases"></div>
+    <p id="empty-active-cases">Активных кейсов пока нет.</p>
+</section>
+
+<section class="case-section" data-case-section="closed" hidden>
+    <div class="tasks" id="closed-cases"></div>
+    <p>Закрытых кейсов пока нет.</p>
+</section>
+        </div>
+    </main>
+</body>
+</html>

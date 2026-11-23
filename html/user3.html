@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Савелий</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <script src="../javascript/common.js" defer></script>
+    <script src="../javascript/profile-tabs.js" defer></script>
+    <script src="../javascript/user3.js" defer></script>
+</head>
+<body class="profile-design">
+    <a class="account" href="user1.html">
+        <img src="../images/avatar-profile1.jpg" alt="Мой профиль">
+    </a>
+
+    <main class="profile-container">
+        <a class="back-link" href="index.html">← На главную</a>
+
+        <header class="profile-header">
+            <div class="profile-left">
+                <img class="profile-photo"
+                     src="../images/avatar-profile3.jpg"
+                     alt="Савелий">
+                <p class="profile-likes">♥ Всего лайков: 15</p>
+            </div>
+
+            <div class="profile-details">
+                <h1>Савелий</h1>
+                <p>Возраст: 19 лет</p>
+                <p class="profile-description">
+                    Начинающий веб-разработчик. Изучаю HTML, CSS
+                    и JavaScript, создаю учебные проекты
+                    и собираю своё портфолио.
+                </p>
+            </div>
+        </header>
+
+        <nav class="profile-tabs" aria-label="Разделы работ">
+            <button class="active" data-filter="all">Работы (<span>1</span>)</button>
+            <button data-filter="done">Готовые (<span>1</span>)</button>
+            <button data-filter="progress">В процессе (<span>0</span>)</button>
+            <button data-filter="archive">Архив (<span>0</span>)</button>
+        </nav>
+
+        <section class="profile-group" data-status="done">
+            <h2>Готовые работы</h2>
+
+            <div class="works">
+                <article class="work">
+                    <a href="work4.html">
+                        <img src="../images/work4.jpg" alt="Работа 4">
+                        <h3>Работа 4</h3>
+                    </a>
+                    <p>Просмотры: 80 · Лайки: 15</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="profile-group" data-status="progress">
+            <h2>Работы в процессе</h2>
+            <p>Пока нет работ в процессе.</p>
+        </section>
+
+        <section class="profile-group" data-status="archive" hidden>
+            <h2>Архив</h2>
+            <p>В архиве пока нет работ.</p>
+        </section>
+    </main>
+</body>
+</html>

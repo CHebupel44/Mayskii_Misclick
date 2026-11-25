@@ -47,3 +47,8 @@ Kanban - доска: https://gusejnovhajrudin.kaiten.ru/space/757093
   Product owner: Создание ТЗ для разработчиков по распределению данных в браузере.\
   Disigner: Составление ER-диаграммы.\
   Developer: Завершен адаптив.\
+
+25.11.26\
+  Product owner: --\
+  Disigner: Составление ER-диаграммы.\
+  Developer: --(Больничный)\
